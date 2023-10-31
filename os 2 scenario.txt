@@ -1,0 +1,50 @@
+#include <stdio.h>
+
+#define MAX_PEOPLE 100
+
+struct Person {
+    int id;
+    int type; // 0 for student, 1 for teacher
+};
+
+int main() {
+    struct Person people[MAX_PEOPLE];
+    int studentQueue[MAX_PEOPLE], teacherQueue[MAX_PEOPLE];
+    int studentFront = -1, studentRear = -1;
+    int teacherFront = -1, teacherRear = -1;
+
+    int n, type, id;
+    printf("Enter the total number of people to the single CPU: ");
+    scanf("%d", &n);
+
+    for (int i = 0; i < n; i++) {
+        printf("Enter type (0 for student, 1 for teacher) and ID for person %d: ", i + 1);
+        scanf("%d %d", &type, &id);
+        
+        if (type == 0) {
+            studentRear++;
+            studentQueue[studentRear] = id;
+        } else if (type == 1) {
+            teacherRear++;
+            teacherQueue[teacherRear] = id;
+        }
+    }
+
+    printf("\nOrder of service:\n");
+
+    // Serve teachers in the order they were entered
+    for (int i = 0; i <= teacherRear; i++) {
+        printf("Teacher %d is being served.\n", teacherQueue[i]);
+        printf("Teacher %d has left the library\n",teacherQueue[i]);
+      
+    }
+
+    // Serve students in the order they were entered
+    for (int i = 0; i <= studentRear; i++) {
+        printf("student %d has started\n",studentQueue[i]);
+        printf("Student %d is being served.\n", studentQueue[i]);
+        printf("Student %d has left the library.\n", studentQueue[i]);
+    }
+
+    return 0;
+}
